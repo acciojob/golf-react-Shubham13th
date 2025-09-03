@@ -4,63 +4,58 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      started: false, // game start status
-      ballPosition: 0, // X position of ball
+      started: false,       // Track if game started
+      ballPosition: 0       // Track ball's X position
     };
   }
 
-  // Handle button click → start game
+  // Start button click handler
   buttonClickHandler = () => {
     this.setState({ started: true });
   };
 
-  // Handle Right Arrow key press
+  // Keyboard event handler
   handleKeyDown = (event) => {
-    if (event.keyCode === 39) {
+    if (event.key === "ArrowRight" || event.keyCode === 39) {
       this.setState((prevState) => ({
-        ballPosition: prevState.ballPosition + 5,
+        ballPosition: prevState.ballPosition + 5
       }));
     }
   };
 
-  // Mount → add event listener
+  // Attach keydown listener when component mounts
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown);
   }
 
-  // Cleanup
+  // Clean up event listener
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  // Decide what to render
-  renderChoice = () => {
-    if (!this.state.started) {
-      return (
-        <button className="start" onClick={this.buttonClickHandler}>
-          Start
-        </button>
-      );
-    } else {
-      return (
-        <div
-          className="ball"
-          style={{
-            position: "absolute",
-            left: this.state.ballPosition + "px",
-            top: "100px",
-            width: "50px",
-            height: "50px",
-            borderRadius: "50%",
-            backgroundColor: "green",
-          }}
-        ></div>
-      );
-    }
-  };
-
   render() {
-    return <div>{this.renderChoice()}</div>;
+    return (
+      <div>
+        {!this.state.started ? (
+          <button className="start" onClick={this.buttonClickHandler}>
+            Start
+          </button>
+        ) : (
+          <div
+            className="ball"
+            style={{
+              position: "absolute",
+              left: this.state.ballPosition + "px",
+              top: "100px",
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              backgroundColor: "green"
+            }}
+          ></div>
+        )}
+      </div>
+    );
   }
 }
 
