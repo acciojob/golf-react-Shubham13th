@@ -4,17 +4,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      started: false,       // Track if game started
-      ballPosition: 0       // Track ball's X position
+      started: false,
+      ballPosition: 0
     };
   }
 
-  // Start button click handler
+  // Start the game
   buttonClickHandler = () => {
     this.setState({ started: true });
   };
 
-  // Keyboard event handler
+  // Handle Right Arrow key press
   handleKeyDown = (event) => {
     if (event.key === "ArrowRight" || event.keyCode === 39) {
       this.setState((prevState) => ({
@@ -23,12 +23,10 @@ class App extends Component {
     }
   };
 
-  // Attach keydown listener when component mounts
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown);
   }
 
-  // Clean up event listener
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
@@ -47,8 +45,8 @@ class App extends Component {
               position: "absolute",
               left: this.state.ballPosition + "px",
               top: "100px",
-              width: "50px",
-              height: "50px",
+              width: "40px",
+              height: "40px",
               borderRadius: "50%",
               backgroundColor: "green"
             }}
